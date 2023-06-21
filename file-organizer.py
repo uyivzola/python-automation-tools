@@ -1,5 +1,6 @@
 import os
 import datetime as dt
+import shutil
 
 
 def get_file_info(file_path):
@@ -39,4 +40,14 @@ def traverse_directory(root_dir):
                 new_file_name = timestamp + "_" + file
                 new_file_path = os.path.join(root, new_file_name)
                 os.rename(file_path, new_file_path)
-                print("Renamed file: "+new_file_name)
+                print("Renamed file: " + new_file_name)
+
+                # MOVE FILES TO SUBDIRS BASED ON FILE EXTENSION
+                file_extension = os.path.splitext(file)[1][1:].lower()
+                destination_folder = os.path.join(root, file_extension)
+
+                if not os.path.exists(destination_folder):
+                    os.makedirs(destination_folder)
+                shutil.move(new_file_path, os.path.join(
+                    destination_folder, new_file_name))
+                print('Move file to ' + destination_folder)
