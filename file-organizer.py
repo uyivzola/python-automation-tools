@@ -51,3 +51,15 @@ def traverse_directory(root_dir):
                 shutil.move(new_file_path, os.path.join(
                     destination_folder, new_file_name))
                 print('Move file to ' + destination_folder)
+
+                # DELETE FILES OLDER THAN A CERTAIN DATE
+                delete_date = dt.datetime(2022, 12, 25)
+                if modified_time < delete_date:
+                    os.remove(os.path.join(destination_folder, new_file_name))
+                    print('Deleted file: ' + new_file_name)
+            print('---')
+
+
+# Example usage
+root_directory = '/path/to/root/directory/'
+traverse_directory(root_directory)
