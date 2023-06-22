@@ -1,6 +1,6 @@
 # 📂 File Organizer: Intelligent File Organizer
 
-FileMinder is a powerful file management tool that helps you organize, analyze, and perform various actions on your files effortlessly. It offers a range of features to simplify your file management tasks and enhance your productivity.
+File Organizer is a powerful file management tool that helps you organize, analyze, and perform various actions on your files effortlessly. It offers a range of features to simplify your file management tasks and enhance your productivity.
 
 ## Features
 
