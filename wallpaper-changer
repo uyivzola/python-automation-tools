@@ -1,0 +1,42 @@
+import requests
+import os
+import random
+import time
+import ctypes  # Import 'ctypes' for calling Windows API functions
+
+# Function to fetch a random image from Unsplash
+def fetch_random_image():
+    api_url = "https://api.unsplash.com/photos/random?client_id=Eh4lH1n9eHqNmnEhOCg6uFqRqD_JJzqpt1xXtGgz5P4"  # Unsplash API endpoint i know i should add it in .env file 
+    response = requests.get(api_url)  # Send an HTTP GET request to Unsplash
+    
+    if response.status_code == 200:  # If the request is successful
+        data = response.json()  # Parse the JSON response
+        image_url = data["urls"]["full"]  # Extract the URL of the full-sized image
+        return image_url  # Return the image URL
+    else:
+        return None  # Return None if the request fails
+
+# Function to set the desktop wallpaper
+def set_wallpaper(image_url):
+    # Download the image from the given URL
+    image_response = requests.get(image_url)
+    if image_response.status_code == 200:  # If the download is successful
+        with open("wallpaper.jpg", "wb") as file:  # Open a file for writing the image
+            file.write(image_response.content)  # Write the image content to the file
+        # Set the wallpaper using the Windows API function SystemParametersInfo
+        ctypes.windll.user32.SystemParametersInfoW(20, 0, os.path.abspath("wallpaper.jpg"), 0x2)
+
+def main():
+    while True:  # Run indefinitely
+        image_url = fetch_random_image()  # Fetch a random image URL
+        if image_url:
+            set_wallpaper(image_url)  # Set the desktop wallpaper with the fetched image
+            print('Changed wallpaper!')  # Print a message indicating the wallpaper change
+        else:
+            print("Failed to fetch an image from Unsplash.")  # Print an error message
+        
+        # Sleep for 900 seconds (15 minutes) before changing the wallpaper again
+        time.sleep(900)
+
+if __name__ == "__main__":
+    main()  # Call the main function when the script is executed
